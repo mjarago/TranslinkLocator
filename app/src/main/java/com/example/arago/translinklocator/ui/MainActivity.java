@@ -54,7 +54,7 @@ import static com.example.arago.translinklocator.Constants.PERMISSIONS_REQUEST_E
 /*
     Created by Mark Arago. email: markjosepharago@gmail.com
     Explicitly asking for permission and maps tutorial all goes to Coding with Mitch on youtube.
-
+    Edit: this line is added to test git vcs
 
  */
 
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements android.location.
     private static final String TAG = "MainActivity";
 
     private boolean locationPermissionGranted = false;
-    
+
+
     //APi Call
     RequestQueue requestQueue;
     StringRequest objectRequest;
@@ -85,10 +86,10 @@ public class MainActivity extends AppCompatActivity implements android.location.
         setContentView(R.layout.activity_main);
         //initialize variables
         requestQueue = Volley.newRequestQueue(this);
-        busArrayList = new ArrayList<Bus>();
+        busArrayList = new ArrayList<>();
         saveArrayList = new SaveArrayList();
         uniqueRoutes = new ArrayList<>();
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
 
 
@@ -212,12 +213,12 @@ public class MainActivity extends AppCompatActivity implements android.location.
                         public void onResponse(String response) {
                             try {
                                 JSONArray jsonArray = new JSONArray(response);
-                                JSONObject jsonObject = new JSONObject();
+                                JSONObject jsonObject;
 
 
 
-                                int busRouteNo = 0;
-                                String busDestination = "", busDirection = "";
+                                int busRouteNo;
+                                String busDestination, busDirection;
                                 List<String> items;
                                 ArrayList<String> destination = new ArrayList<>();
                                 ArrayList<Integer> busNo = new ArrayList<>();
@@ -321,9 +322,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
     private boolean checkMapServices() {
         if (isServicesOK()) {
             Log.d(TAG,"checkMapServices: isMapsEnabled");
-            if (isMapsEnabled()) {
-                return true;
-            }
+            return isMapsEnabled();
         }
         return false;
     }
