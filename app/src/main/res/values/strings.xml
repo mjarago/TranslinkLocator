@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Translink Locator</string>
+    <string name="google_maps_api_key">AIzaSyBGvI8XtpzYbH6_rPje8y_WPvsifzN_sxQ</string>
+    <string name="intent_bus_list">intent_user_list</string>
+    <string name="fragment_bus_list">Bus List</string>
+
+    <string name="translink_api_key">21mn31dcULj0N9JLDzd7</string>
+</resources>
