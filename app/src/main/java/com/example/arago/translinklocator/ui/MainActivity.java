@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
     //Var for getting locations
     public LocationManager locationManager;
     public Criteria criteria;
-    public String bestProvider;
+    public String mProvider;
     double latitude, longitude;
     ArrayList<String> uniqueRoutes;
 
@@ -298,8 +298,8 @@ public class MainActivity extends AppCompatActivity implements android.location.
         else{
             locationManager = (LocationManager)  this.getSystemService(Context.LOCATION_SERVICE);
             criteria = new Criteria();
-            bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
-            Location location = locationManager.getLastKnownLocation(bestProvider);
+            mProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
+            Location location = locationManager.getLastKnownLocation(mProvider);
             if (location != null) {
                 Log.e("TAG", "GPS is on");
                 //convert latitude and longitude to 5 decimal places. (Translink only accepts up to five)
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
             }
             else{
                 //if location is null request for update on on LocationChanged()
-                locationManager.requestLocationUpdates(bestProvider, 1000, 0, this);
+                locationManager.requestLocationUpdates(mProvider, 1000, 0, this);
             }
         }
 
@@ -435,8 +435,6 @@ public class MainActivity extends AppCompatActivity implements android.location.
         super.onResume();
         if (checkMapServices()) {
             if (locationPermissionGranted) {
-                //getLastKnownLocation();
-                //getBusListAndMaps();
                 getLastLocation();
             } else {
                 getLocationPermission();
@@ -446,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements android.location.
 
     @Override
     public void onLocationChanged(Location location) {
-        //Hey, a non null location! Sweet!
+
         Log.d(TAG,"onLocationChanged");
         //remove location callback:
         locationManager.removeUpdates(this);
