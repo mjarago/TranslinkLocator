@@ -28,11 +28,13 @@ public class BusRecyclerAdapter extends RecyclerView.Adapter<BusRecyclerAdapter.
         void respond(int busStopNo, String destination);
     }
 
+
     public BusRecyclerAdapter(ArrayList<Bus> buses, FragmentInterface fragmentInterface) {
         this.busArrayList = buses;
         mInterface = fragmentInterface;
         Log.d(TAG,"busRecyclerAdapter");
     }
+
 
     @NonNull
     @Override
@@ -42,8 +44,8 @@ public class BusRecyclerAdapter extends RecyclerView.Adapter<BusRecyclerAdapter.
         final ViewHolder holder = new ViewHolder(view);
         Log.d(TAG,"onCreateView");
         return holder;
-
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
@@ -67,22 +69,17 @@ public class BusRecyclerAdapter extends RecyclerView.Adapter<BusRecyclerAdapter.
         //if item = selected position changed background
         //used so that it changed the color back to white when other item is clicked
         if(selectedItem == position){
-
             holder.linearLayout.setBackgroundColor(Color.parseColor("#d1fff4"));
             //What the interface would respond back to BusListFragment
             mInterface.respond(bus[position].getBusRouteNo(),bus[position].getBusDestination());
-
         }
         //back to white
         else{
             holder.linearLayout.setBackgroundColor(Color.parseColor("#ffffff"));
         }
-
-
         Log.d(TAG,"Size: " +busArrayList.size());
 
     }
-
 
 
     @Override
@@ -90,16 +87,17 @@ public class BusRecyclerAdapter extends RecyclerView.Adapter<BusRecyclerAdapter.
         return busArrayList.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView busName;
         LinearLayout linearLayout;
 
         public ViewHolder(final View itemView) {
-
             super(itemView);
             busName = itemView.findViewById(R.id.busName);
             linearLayout = (LinearLayout)itemView.findViewById(R.id.linearLayout);
         }
+
 
         @Override
         public void onClick(View view) {

@@ -68,6 +68,8 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
 
     public static double lat, lng;
     public static Boolean checker = false;
+
+
     public static BusListFragment newInstance(){return new BusListFragment();}
 
 
@@ -76,7 +78,6 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(getContext());
         userPosition = new UserLocation();
-
 
         Bundle bundle = this.getArguments();
         if (getArguments() != null) {
@@ -102,13 +103,12 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
         myRecyclerView = view.findViewById(R.id.bus_list_recycler_view);
         mapView = view.findViewById(R.id.bus_list_map);
 
-
         //intialize the Bus List and Google Maps
         initBusListRecyclerView();
         initGoogleMap(savedInstanceState);
-
         return view;
     }
+
 
     private void getBusStopLocations(double lat, double lng){
         Log.d(TAG,"getBusStopLocations: called");
@@ -127,27 +127,9 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
                             JSONArray jsonArray = new JSONArray(response);
                             JSONObject jsonObject = new JSONObject();
 
-                             /* sample return
-                                    {
-                                  "StopNo": 61441,
-                                  "Name": "SB BONSON RD FS HOFFMANN WAY",
-                                  "BayNo": "N",
-                                  "City": "PITT MEADOWS",
-                                  "OnStreet": "BONSON RD",
-                                  "AtStreet": "HOFFMANN WAY",
-                                  "Latitude": 49.204363,
-                                  "Longitude": -122.678366,
-                                  "WheelchairAccess": 1,
-                                  "Distance": 1987,
-                                  "Routes": "719, 722"
-                                }
-                            */
                             int stopNo;
                             double stopDistance, stopLatitude, stopLongitude;
                             String stopRoutes, stopName;
-
-
-
                             //get each jsonobject
                             for(int x = 0; x < jsonArray.length(); x++){
                                 jsonObject = jsonArray.getJSONObject(x);
@@ -188,10 +170,10 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
         requestQueue.add(objectRequest);
     }
 
+
     //Mark Bus Stops
     public void markBusStop(ArrayList<BusStop> busStop){
         Marker marker;
-
         LatLng latLng;
 
         int size =  busStop.size();
@@ -207,12 +189,10 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
                 marker =  googleMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.red_icon_8)));
                 marker.setTitle(String.valueOf(stop[x].getStopNo()) + ": " + stop[x].getStopName());
                 marker.setSnippet(stop[x].getStopRoutes());
-
             }
-
         }
-
     }
+
 
     //Go to users current location and move camera
     private void setCameraView(double boundary){
@@ -230,6 +210,7 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+
     //setGoogleMap
     private void initGoogleMap(Bundle savedInstanceState){
         // *** IMPORTANT ***
@@ -244,6 +225,8 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
 
         mapView.getMapAsync(this);
     }
+
+
     private void initBusListRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         //PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -256,6 +239,8 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
 
 
     }
+
+
     //Communicator for RecyclerAdapter
     BusRecyclerAdapter.FragmentInterface mFragmentInterface = new BusRecyclerAdapter.FragmentInterface() {
 
@@ -280,6 +265,7 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
 
         }
     };
+
 
     public void getCurrentBusLocation(int busStopNo, final String destination){
         Log.d(TAG,"getCurrentBusLocation: called");
@@ -350,8 +336,8 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
         requestQueue.add(objectRequest);
     }
 
-    private void markBusCurrentLocation(ArrayList<Bus> buses, String destination){
 
+    private void markBusCurrentLocation(ArrayList<Bus> buses, String destination){
         Marker marker, stopMarker;
 
         int size =  buses.size();
@@ -381,17 +367,15 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
         Log.d(TAG,"MARKER LIST LATLNG: " + size);
     }
 
+
     //clear of previously marked list
     private void reloadMarkerBusLocation(){
 
         for(int x = 0; x < markerList.size(); x++){
             markerList.get(x).setVisible(false);
         }
-
         markerList.clear();
-
     }
-
 
 
     @Override
@@ -406,7 +390,6 @@ public class BusListFragment extends Fragment implements OnMapReadyCallback {
 
         mapView.onSaveInstanceState(mapViewBundle);
     }
-
 
 
     @Override
